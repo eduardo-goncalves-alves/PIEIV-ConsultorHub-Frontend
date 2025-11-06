@@ -1,6 +1,6 @@
 import React from "react";
 
-export function DashboardPage() {
+export function ClientesPage() {
   return (
     <div className="p-8">
       

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 
 export function LoginPage() {
-    // Criando estados para armazenar o email e a senha
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
