@@ -2,15 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css' 
 
-// Import das funções do roteador
+
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 
-// 3. Importe as páginas que você criou
+
 import { LoginPage } from './pages/Login.tsx';
 import { DashboardPage } from './pages/Dashboard.tsx';
+import { MainLayout } from './components/layout/MainLayout.tsx'
+import { ClientesPage } from './pages/Clientes.tsx';
+import { ApolicesPage } from './pages/Apolices.tsx';
 
 // Mapa de rotas
 const router = createBrowserRouter([
@@ -20,7 +23,22 @@ const router = createBrowserRouter([
   },
   {
     path: "/", 
-    element: <DashboardPage />, 
+    element: <MainLayout />, 
+
+    children: [
+      {
+        path: "/", 
+        element: <DashboardPage />, 
+      },
+      {
+        path: "/clientes", // 
+        element: <ClientesPage />,
+      },
+      {
+        path: "/apolices", // 
+        element: <ApolicesPage />,
+      },
+    ]
   },
 ]);
 

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 
 export function LoginPage() {
-    // Criando estados para armazenar o email e a senha
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -15,7 +15,7 @@ export function LoginPage() {
         setError('');
 
         try {
-            const response = await axios.post('https://localhost:8080/api/auth/login', {
+            const response = await axios.post('http://localhost:8080/api/auth/login', {
                 email: email, 
                 senha: password,
             });

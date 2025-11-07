@@ -1,6 +1,6 @@
 import React from "react";
 
-export function DashboardPage() {
+export function ApolicesPage() {
   return (
     <div className="p-8">
       
