@@ -1,73 +1,78 @@
-# React + TypeScript + Vite
+# ConsultorHub - Projeto Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Pré-requisitos
+Antes de começar, garanta que você tem as seguintes ferramentas instaladas em seu computador.
 
-Currently, two official plugins are available:
+Node.js (LTS): (Que já inclui o npm). Você pode baixar aqui.
+Git: Essencial para clonar o repositório.
+VS Code: (Você já tem).
+Java JDK (17+): Necessário para rodar o backend.
+PostgreSQL: O banco de dados do projeto.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Instalação e Configuração
+Para o projeto funcionar, você precisa ter dois servidores rodando: o Backend e o Frontend.
 
-## React Compiler
+Parte 1: Configurando o Backend (Servidor)
+Clone o Repositório do Backend:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Configurando o Frontend (React)
+Este é o projeto que está neste repositório.
 
-## Expanding the ESLint configuration
+## Clone o Repositório do Frontend:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+git clone https://github.com/eduardo-goncalves-alves/PIEIV-ConsultorHub-Frontend.git
+Entre na Pasta do Projeto:
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+cd PIEIV-ConsultorHub-Frontend
+Instale as Dependências: O npm vai ler o package.json e baixar todas as bibliotecas necessárias (React, Vite, Tailwind, etc.).
+```
+
+```
+npm install
+🏃‍♂️ Rodando o Projeto
+Agora que tudo está configurado, você precisa de 2 terminais abertos para rodar a aplicação:
+```
+
+## Terminal: Frontend
+
+Na pasta PIEIV-ConsultorHub-Frontend, rode:
+
+```
+npm run dev
+Seu terminal do frontend mostrará uma URL (provavelmente http://localhost:5173/). Abra essa URL no seu navegador. O React (rodando no 5173) irá automaticamente se conectar à sua API (rodando no 8080).
+```
+
+## Fluxo de Trabalho da Equipe (Git)
+Para manter o projeto organizado e sem bagunça, vamos seguir este fluxo de trabalho:
+
+**NUNCA trabalhe direto na branch main.**
+
+> Antes de começar qualquer tarefa, atualize sua main local:
+
+```
+git checkout main
+git pull origin main
+```
+
+Crie uma nova branch para a sua tarefa (ex: "corrigir-bug-login", "feature/tela-clientes"):
+
+```
+git checkout -b feature/minha-nova-tarefa
+Faça seu trabalho, salve os arquivos e "commite" seu progresso:
+```
+
+```
+git add .
+git commit -m "feat: Adiciona o formulário de clientes"
+```
+
+Envie sua branch para o GitHub:
+
+```
+git push origin feature/minha-nova-tarefa
+```
+
+Vá até o site do GitHub e abra um Pull Request (PR) para que seu código possa ser revisado e "juntado" (mergeado) à main.
