@@ -2,12 +2,12 @@ import React, {useState} from "react";
 import axios from "axios";
 
 interface ModalProps {
-    isOpen: boolean;
+    isFormModalOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
 }
 
-export function ClienteFormModal({ isOpen, onClose, onSuccess }: ModalProps) {
+export function ClienteFormModal({ isFormModalOpen, onClose, onSuccess }: ModalProps) {
     const [nome, setNome] = useState('');
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
@@ -47,7 +47,7 @@ export function ClienteFormModal({ isOpen, onClose, onSuccess }: ModalProps) {
         }
     };
 
-    if (!isOpen) {
+    if (!isFormModalOpen) {
         return null;
     }
 

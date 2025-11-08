@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Header } from '../components/layout/Header';
 import { LuPencil, LuTrash2 } from 'react-icons/lu'; 
 import { ClienteFormModal } from '../components/ClienteFormModal';
+import { ConfirmModal } from '../components/ConfirmModal';
 
 interface Cliente {
   id: string;
@@ -14,7 +15,9 @@ interface Cliente {
 
 export function ClientesPage() {
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [clienteIdParaDel, setClienteIdParaDel] = useState<string | null>(null);
   const [clientesList, setClientesList] = useState<Cliente[]>([]);
   const [clienteSearch, setClienteSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -46,10 +49,31 @@ export function ClientesPage() {
       setIsLoading(false); 
     }
   };
+
   
   useEffect(() => {
     fetchClientes();
   }, []); 
+
+  // Função de deletar
+  const handleDelete = async (idCliente: string) => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      setError('Autenticação falhou. Faça login novamente.');
+      return;
+    }
+
+    try {
+        const response = await axios.delete(`http://localhost:8080/api/clientes/${idCliente}`,
+          {headers: { 'Authorization': `Bearer ${token}` }}
+        );
+        fetchClientes();
+
+      } catch (err) {
+        setError('Falha ao deletar cliente.');
+        console.error(err); 
+    };
+  }
 
   if (isLoading) {
     return <div>Carregando clientes...</div>;
@@ -80,7 +104,7 @@ export function ClientesPage() {
               onChange={(e) => setClienteSearch(e.target.value)}
             />
             <button 
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsFormModalOpen(true)}
               className="px-4 py-2 font-semibold text-white bg-[#3D3E7E] rounded-lg hover:bg-[#2d2e5e]">
               + Adicionar Cliente
             </button>
@@ -109,7 +133,12 @@ export function ClientesPage() {
                   <td className="px-6 py-4 text-black">{cliente.email}</td>
                   <td className="px-6 py-4 flex space-x-3">
                     <LuPencil className="w-10 h-7 text-black cursor-pointer hover:text-green-500" />
-                    <LuTrash2 className="w-10 h-7 text-black cursor-pointer hover:text-red-500" />
+                    <LuTrash2 
+                    onClick={() => {
+                      setClienteIdParaDel(cliente.id);
+                      setIsConfirmModalOpen(true)
+                    }}        
+                    className="w-10 h-7 text-black cursor-pointer hover:text-red-500" />
                   </td>
                 </tr>
               ))}
@@ -118,13 +147,29 @@ export function ClientesPage() {
         </div>
 
         <ClienteFormModal 
-          isOpen={isModalOpen} 
-          onClose={() => setIsModalOpen(false)}
+          isFormModalOpen={isFormModalOpen} 
+          onClose={() => setIsFormModalOpen(false)}
           onSuccess={() => {
-            setIsModalOpen(false);
+            setIsFormModalOpen(false);
             fetchClientes();
-          }}
-        />
+        }}/>
+
+        <ConfirmModal
+            isOpen={isConfirmModalOpen}      
+            onClose={() => setIsConfirmModalOpen(false)}     
+            onConfirm={() => {
+              if (clienteIdParaDel){
+                handleDelete(clienteIdParaDel);
+                setIsConfirmModalOpen(false);
+              }
+            }}
+        >
+            <h2 className='text-xl font-bold text-gray-800'> Tem certeza ?</h2>
+            <p className='mt-2 italic text-gray-600'>
+              Você realmente deseja excluir este cliente? Esta ação não pode ser desfeita.
+            </p>
+        </ConfirmModal>
+
       </div>
     </div>
   );
