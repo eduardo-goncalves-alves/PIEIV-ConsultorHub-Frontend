@@ -1,13 +1,16 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
+import { type Cliente } from "../types/cliente.types";
+import { IMaskInput } from "react-imask";
 
 interface ModalProps {
-    isFormModalOpen: boolean;
+    isOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
+    clienteAtual?: Cliente | null; 
 }
 
-export function ClienteFormModal({ isFormModalOpen, onClose, onSuccess }: ModalProps) {
+export function ClienteFormModal({ isOpen, onClose, onSuccess, clienteAtual }: ModalProps) {
     const [nome, setNome] = useState('');
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
@@ -15,23 +18,44 @@ export function ClienteFormModal({ isFormModalOpen, onClose, onSuccess }: ModalP
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
+    useEffect(() => {
+        if (isOpen && clienteAtual){
+            setNome(clienteAtual.nome || '');
+            setCpf(clienteAtual.cpf || '');
+            setTelefone(clienteAtual.telefone || '');
+            setEmail(clienteAtual.email || '');
+        } else if (isOpen && !clienteAtual) {
+            setNome('');
+            setCpf('');
+            setTelefone('');
+            setEmail('');
+        }
+    }, [isOpen, clienteAtual])
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         setError('');
         
         const token = localStorage.getItem('authToken');
-        if (!token) {
-        setError('Autenticação falhou. Faça login novamente.');
-        setIsLoading(false);
-        return;
-        }
+        const headers = {'Authorization':`Bearer ${token}`};
+        const dadosDoFormulario = {nome, cpf, telefone, email};
 
         try {
-        await axios.post('http://localhost:8080/api/clientes', 
-            { nome, cpf, telefone, email }, 
-            { headers: { 'Authorization': `Bearer ${token}` } }
-        );
+            if (clienteAtual) {
+                await axios.put(
+                `http://localhost:8080/api/clientes/${clienteAtual.id}`, 
+                dadosDoFormulario,
+                { headers }
+                );
+            } else {
+                await axios.post(
+                'http://localhost:8080/api/clientes',
+                dadosDoFormulario,
+                { headers }
+                );
+            }
+      
 
         setIsLoading(false);
         setNome('');
@@ -47,7 +71,7 @@ export function ClienteFormModal({ isFormModalOpen, onClose, onSuccess }: ModalP
         }
     };
 
-    if (!isFormModalOpen) {
+    if (!isOpen) {
         return null;
     }
 
@@ -55,14 +79,14 @@ export function ClienteFormModal({ isFormModalOpen, onClose, onSuccess }: ModalP
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
         
         <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-xl">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Adicionar Cliente</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Adicionar/Editar Cliente</h2>
             
             {/* Formulário */}
             <form onSubmit={handleSubmit}>
             <div className="space-y-4">
                 {/* Nome */}
                 <div>
-                <label htmlFor="nome" className="block text-sm font-medium text-gray-700">Nome</label>
+                <label htmlFor="nome" className="block text-sm font-medium text-gray-700">Nome*</label>
                 <input
                     type="text"
                     id="nome"
@@ -76,24 +100,26 @@ export function ClienteFormModal({ isFormModalOpen, onClose, onSuccess }: ModalP
                 <div className="grid grid-cols-2 gap-4">
                 <div>
                     <label htmlFor="cpf" className="block text-sm font-medium text-gray-700">CPF</label>
-                    <input
-                    type="text"
-                    id="cpf"
-                    value={cpf}
-                    onChange={(e) => setCpf(e.target.value)}
-                    className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
-                    required
+                    <IMaskInput
+                        mask="000.000.000-00"
+                        type="text"
+                        id="cpf"
+                        value={cpf}
+                        onAccept={(value) => setCpf(value)}
+                        className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
+                        required
                     />
                 </div>
                 <div>
                     <label htmlFor="telefone" className="block text-sm font-medium text-gray-700">Telefone</label>
-                    <input
-                    type="text"
-                    id="telefone"
-                    value={telefone}
-                    onChange={(e) => setTelefone(e.target.value)}
-                    className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
-                    required
+                    <IMaskInput
+                        mask={"(00) 00000-0000"}
+                        type="text"
+                        id="telefone"
+                        value={telefone}
+                        onAccept={(value) => setTelefone(value)}
+                        className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
+                        required
                     />
                 </div>
                 </div>
