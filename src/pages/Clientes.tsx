@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react'; 
 import axios from 'axios';
 import { Header } from '../components/layout/Header';
-import { LuPencil, LuTrash2 } from 'react-icons/lu'; 
+import { LuPencil, LuTrash2, LuPlus } from 'react-icons/lu'; 
 import { ClienteFormModal } from '../components/ClienteFormModal';
 import { ConfirmModal } from '../components/ConfirmModal';
-
-interface Cliente {
-  id: string;
-  nome: string;
-  cpf: string;
-  email: string;
-  telefone: string;
-}
+import { type Cliente } from '../types/cliente.types';
 
 export function ClientesPage() {
 
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [clienteParaEdit, setClienteParaEdit] = useState<Cliente | null>(null);
   const [clienteIdParaDel, setClienteIdParaDel] = useState<string | null>(null);
   const [clientesList, setClientesList] = useState<Cliente[]>([]);
   const [clienteSearch, setClienteSearch] = useState('');
@@ -104,9 +98,12 @@ export function ClientesPage() {
               onChange={(e) => setClienteSearch(e.target.value)}
             />
             <button 
-              onClick={() => setIsFormModalOpen(true)}
-              className="px-4 py-2 font-semibold text-white bg-[#3D3E7E] rounded-lg hover:bg-[#2d2e5e]">
-              + Adicionar Cliente
+              onClick={() => {
+                setClienteParaEdit(null)
+                setIsFormModalOpen(true)
+              }}
+              className="px-4 py-2 font-semibold flex items-center text-white bg-[#3D3E7E] rounded-lg hover:bg-[#2d2e5e]">
+              <LuPlus className='mr-1'></LuPlus> Adicionar Cliente
             </button>
           </div>
         </div>
@@ -132,7 +129,12 @@ export function ClientesPage() {
                   <td className="px-6 py-4 text-black">{cliente.telefone}</td>
                   <td className="px-6 py-4 text-black">{cliente.email}</td>
                   <td className="px-6 py-4 flex space-x-3">
-                    <LuPencil className="w-10 h-7 text-black cursor-pointer hover:text-green-500" />
+                    <LuPencil 
+                    onClick={() =>{
+                      setClienteParaEdit(cliente)
+                      setIsFormModalOpen(true)
+                    }}
+                    className="w-10 h-7 text-black cursor-pointer hover:text-green-500" />
                     <LuTrash2 
                     onClick={() => {
                       setClienteIdParaDel(cliente.id);
@@ -147,10 +149,15 @@ export function ClientesPage() {
         </div>
 
         <ClienteFormModal 
-          isFormModalOpen={isFormModalOpen} 
-          onClose={() => setIsFormModalOpen(false)}
+          isOpen={isFormModalOpen} 
+          onClose={() => {
+            setClienteParaEdit(null)
+            setIsFormModalOpen(false)
+          }}
+          clienteAtual={clienteParaEdit}
           onSuccess={() => {
             setIsFormModalOpen(false);
+            setClienteParaEdit(null)
             fetchClientes();
         }}/>
 
