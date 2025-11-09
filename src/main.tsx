@@ -14,6 +14,7 @@ import { DashboardPage } from './pages/Dashboard.tsx';
 import { MainLayout } from './components/layout/MainLayout.tsx'
 import { ClientesPage } from './pages/Clientes.tsx';
 import { ApolicesPage } from './pages/Apolices.tsx';
+import { SeguradoraPage } from './pages/Seguradoras.tsx';
 
 // Mapa de rotas
 const router = createBrowserRouter([
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "/apolices", // 
         element: <ApolicesPage />,
+      },
+      {
+        path: "/seguradoras", // 
+        element: <SeguradoraPage />,
       },
     ]
   },

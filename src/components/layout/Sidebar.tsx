@@ -1,11 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { LuChartNoAxesCombined, LuUsers, LuFileText, LuLogOut } from 'react-icons/lu';
+import { LuChartNoAxesCombined, LuUsers, LuFileText, LuShield, LuLogOut } from 'react-icons/lu';
 
-export function Sidebar() {
+interface SidebarProps {
+  onLogoutClick: () => void;
+}
+
+export function Sidebar({onLogoutClick}: SidebarProps) {
   const baseLinkClass = "flex items-center w-full p-3 rounded-lg text-left hover:bg-slate-700 transition-colors";
   const activeLinkClass = "bg-[#40BEBE] text-white hover:bg-[#40BEBE]";
-
+  
   return (
     <aside className="w-64 h-screen text-white flex flex-col bg-[#3D3E7E]">
       
@@ -34,6 +38,16 @@ export function Sidebar() {
           <LuUsers className="mr-3 h-5 w-5" /> 
           Clientes
         </NavLink>
+
+        <NavLink 
+          to="/seguradoras" 
+          className={({ isActive }) => 
+            `${baseLinkClass} ${isActive ? activeLinkClass : ''}`
+          }
+        >
+          <LuShield className="mr-3 h-5 w-5" />
+          Seguradoras
+        </NavLink>
         
         <NavLink 
           to="/apolices" 
@@ -46,9 +60,10 @@ export function Sidebar() {
         </NavLink>
       </nav>
 
-      {/* 3. O Botão de Sair (no final) */}
+      {/* 3. O Botão de Sair */}
       <div className="p-4 border-t border-slate-700">
         <button 
+          onClick={onLogoutClick}
           className={`${baseLinkClass} text-red-400 hover:bg-red-900/50`}
         >
           <LuLogOut className="mr-3 h-5 w-5" /> 
