@@ -103,7 +103,7 @@ export function SeguradoraPage() {
                 setSeguradoraParaEdit(null)
                 setIsFormModalOpen(true)
               }}
-              className="px-4 py-2 font-semibold flex items-center text-white bg-[#3D3E7E] rounded-lg hover:bg-[#2d2e5e]">
+              className="px-4 py-2 font-semibold flex items-center text-white bg-[#2e2f5f] rounded-lg hover:bg-[#202042]">
               <LuPlus className='mr-1'></LuPlus> Adicionar Seguradora
             </button>
           </div>
@@ -112,7 +112,7 @@ export function SeguradoraPage() {
         {/* Tabela */}
         <div className="overflow-hidden bg-white rounded-lg shadow-md">
           <table className="w-full min-w-full table-fixed">
-            <thead className="bg-[#3D3E7E] text-white">
+            <thead className="bg-[#2e2f5f] text-white">
               <tr>
                 <th className="w-4/12 px-6 py-3 text-left text-sm font-semibold">Nome</th>
                 <th className="w-3/12 px-6 py-3 text-left text-sm font-semibold">Email</th>

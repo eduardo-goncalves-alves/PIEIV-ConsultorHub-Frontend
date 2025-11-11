@@ -11,7 +11,7 @@ export function Sidebar({onLogoutClick}: SidebarProps) {
   const activeLinkClass = "bg-[#40BEBE] text-white hover:bg-[#40BEBE]";
   
   return (
-    <aside className="w-64 h-screen text-white flex flex-col bg-[#3D3E7E]">
+    <aside className="w-64 h-screen text-white flex flex-col bg-linear-to-r from-[#3D3E7E] to-[#2e2f5f]">
       
       <div className="p-6 flex items-center justify-center border-b border-slate-700">
         <img src="/logo_consultorhub_white.png" alt="Logo" className="w-32" />
