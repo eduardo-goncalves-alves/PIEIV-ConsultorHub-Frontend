@@ -113,7 +113,7 @@ export function ClienteFormModal({ isOpen, onClose, onSuccess, clienteAtual }: M
                 <div>
                     <label htmlFor="telefone" className="block text-sm font-medium text-gray-700">Telefone</label>
                     <IMaskInput
-                        mask={"(00) 0000-0000"}
+                        mask={"(00) 00000-0000"}
                         type="text"
                         id="telefone"
                         value={telefone}
