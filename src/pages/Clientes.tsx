@@ -84,7 +84,7 @@ export function ClientesPage() {
   return (
     <div className="w-full h-full">
       <Header title="Clientes" />
-      <div className="p-8">
+      <div className="px-2 py-8">
         
         {/* Barra de Gerenciamento */}
         <div className="flex items-center justify-between mb-6">
