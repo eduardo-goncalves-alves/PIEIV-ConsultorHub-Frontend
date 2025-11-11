@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'; 
 import axios from 'axios';
 import { Header } from '../components/layout/Header';
-import { LuPencil, LuTrash2, LuPlus } from 'react-icons/lu'; 
+import { LuPencil, LuTrash2, LuPlus, LuDownload } from 'react-icons/lu'; 
 import { ClienteFormModal } from '../components/ClienteFormModal';
 import { ConfirmModal } from '../components/ConfirmModal';
+import { CSVLink } from 'react-csv';
 import { type Cliente } from '../types/cliente.types';
 
 export function ClientesPage() {
@@ -16,6 +17,13 @@ export function ClientesPage() {
   const [clienteSearch, setClienteSearch] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const headersCSV = [
+  { label: "Nome", key: "nome" },
+  { label: "CPF", key: "cpf" },
+  { label: "Telefone", key: "telefone" },
+  { label: "Email", key: "email" }
+  ];
 
   const fetchClientes = async () => {
     setIsLoading(true); 
@@ -84,7 +92,7 @@ export function ClientesPage() {
   return (
     <div className="w-full h-full">
       <Header title="Clientes" />
-      <div className="p-8">
+      <div className="px-2 py-8">
         
         {/* Barra de Gerenciamento */}
         <div className="flex items-center justify-between mb-6">
@@ -97,6 +105,15 @@ export function ClientesPage() {
               value={clienteSearch} 
               onChange={(e) => setClienteSearch(e.target.value)}
             />
+            
+            <CSVLink 
+              data={clientesFiltrados}
+              filename={'cliente-consultorhub.csv'}
+              headers={headersCSV}
+              className="px-4 py-2 font-semibold flex items-center text-white bg-[#3D3E7E] rounded-lg hover:bg-[#2d2e5e]">
+              <LuDownload className='mr-1'></LuDownload> Exportar CSV
+            </CSVLink>
+
             <button 
               onClick={() => {
                 setClienteParaEdit(null)

@@ -38,7 +38,7 @@ export function SeguradoraPage() {
       setSeguradorasList(response.data); 
 
     } catch (err) {
-      setError('Falha ao buscar seguradora.');
+      setError('Falha ao buscar seguradoras.');
       console.error(err); 
     } finally {
       setIsLoading(false); 
@@ -85,7 +85,7 @@ export function SeguradoraPage() {
   return (
     <div className="w-full h-full">
       <Header title="Seguradoras" />
-      <div className="p-8">
+      <div className="px-2 py-8">
         
         {/* Barra de Gerenciamento */}
         <div className="flex items-center justify-between mb-6">
