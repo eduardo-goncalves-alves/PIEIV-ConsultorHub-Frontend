@@ -119,7 +119,7 @@ export function ClientesPage() {
                 setClienteParaEdit(null)
                 setIsFormModalOpen(true)
               }}
-              className="px-4 py-2 font-semibold flex items-center text-white bg-[#2e2f5f] rounded-lg hover:bg-[#202042]">
+              className="px-4 py-2 font-semibold flex items-center text-white bg-[#2e2f5f] rounded-lg hover:bg-[#2d2e5e]">
               <LuPlus className='mr-1'></LuPlus> Adicionar Cliente
             </button>
           </div>
@@ -189,7 +189,7 @@ export function ClientesPage() {
             }}
         >
             <h2 className='text-xl font-bold text-gray-800'> Tem certeza ?</h2>
-            <p className='mt-2 italic text-gray-600'>
+            <p className='mt-2 italic text-[0.9em] text-gray-600'>
               Você realmente deseja excluir este cliente? Esta ação não pode ser desfeita.
             </p>
         </ConfirmModal>

@@ -15,12 +15,22 @@ import { MainLayout } from './components/layout/MainLayout.tsx'
 import { ClientesPage } from './pages/Clientes.tsx';
 import { ApolicesPage } from './pages/Apolices.tsx';
 import { SeguradoraPage } from './pages/Seguradoras.tsx';
+import { RedefinirSenhaPage } from './pages/EsqueciSenha.tsx';
+import { ResetarSenhaPage } from './pages/ResetarSenha.tsx';
 
 // Mapa de rotas
 const router = createBrowserRouter([
   {
     path: "/login", 
     element: <LoginPage />, 
+  },
+  {
+    path: "/redefinir-senha", 
+    element: <RedefinirSenhaPage />, 
+  },
+  {
+  path: "/resetar-senha", 
+  element: <ResetarSenhaPage />,
   },
   {
     path: "/", 
