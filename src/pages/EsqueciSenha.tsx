@@ -1,26 +1,27 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
-import { LuEye, LuEyeOff } from 'react-icons/lu';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 
-export function LoginPage() {
+export function RedefinirSenhaPage() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+    const [successMsg, setSuccessMsg] = useState('');
+    const navigate = useNavigate();
 
     // Função para lidar com o envio do formulário
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         setIsLoading(true);
         setError('');
+        setSuccessMsg('');
 
         try {
-            const response = await axios.post('http://localhost:8080/api/auth/login', {
+            const response = await axios.post('http://localhost:8080/api/auth/forgot-password', {
                 email: email, 
-                senha: password,
+                senha: password
             });
 
             setIsLoading(false);
@@ -31,9 +32,10 @@ export function LoginPage() {
 
         } catch (err) {
             setIsLoading(false);
-            setError('Email ou senha inválidos. Tente novamente.');
+            setError('E-mail inválido. Insira um e-mail válido.');
         }
     };
+
 
     return (
     
@@ -44,12 +46,15 @@ export function LoginPage() {
         <div className="flex flex-col items-center">
           <img src="logo_consultorhub_white.png" alt="ConsultorHub Logo" className="w-20" /> 
           <h2 className="mt-2 mb-6 text-2xl font-bold text-center text-white">
-            Olá, seja bem vindo!
+            Redefinir Senha
           </h2>
+          <p className='mt-2 mb-6 text-[1.2em] text-center text-white'>
+            Informe o e-mail para o qual você deseja redefinir sua senha.
+          </p>
         </div>
 
         {/* Formulário */}
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-6" onSubmit={handleSubmit}> 
           
           {/* Input de Email */}
           <div>
@@ -65,25 +70,6 @@ export function LoginPage() {
             />
           </div>
 
-          {/* Input de Senha */}
-          <div className='mb-4 relative'>
-            <input 
-              type={showPassword ? 'text' : 'password'}
-              placeholder='Senha'
-              className="w-full px-4 py-3 text-gray-900 bg-gray-200 border-none rounded-lg focus:outline-none focus:ring-2 focus:ring-[#40BEBE]"
-              value={password}
-              onChange={(e)=> setPassword(e.target.value)}
-              required
-            />
-            <div
-              className='absolute inset-y-0 right-0 flex items-center pr-3'
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? (<LuEye className='text-gray-800 cursor-pointer'/>) : (<LuEyeOff className='text-gray-800 cursor-pointer'/>)}
-            </div>
-          </div>
-
-
           {/* Mensagem de Erro*/}
           {error && (
             <div className="p-3 text-center text-red-400 bg-red-900/30 rounded-lg">
@@ -91,24 +77,25 @@ export function LoginPage() {
             </div>
           )}
 
-          {/* Esqueci minha senha */}
-          <NavLink 
-          to='/redefinir-senha'
-          className=' text-center text-white opacity-60 hover:opacity-100 cursor-pointer'>
-            Esqueci minha senha
-          </NavLink>
-
           {/* Botão de Entrar */}
           <div>
             <button
+            
               type="submit"
               disabled={isLoading}
-              className="w-full px-4 py-3 mt-5 font-semibold text-white rounded-lg bg-[#40BEBE] hover:bg-[#38a8a8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#40BEBE] disabled:opacity-50"
+              className="w-full px-4 py-3 font-semibold text-white rounded-lg bg-[#40BEBE] hover:bg-[#38a8a8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#40BEBE] disabled:opacity-50"
             >
               {/* Mostra "Entrar" ou "Carregando..." */}
-              {isLoading ? 'Carregando...' : 'Entrar'}
+              {isLoading ? 'Enviando...' : 'Redefinir Senha'}
             </button>
           </div>
+          <div className='w-full text-center'>
+            <NavLink
+              to='/login'
+              className="w-full px-4 py-3 my-3 font-semibold text-white disabled:opacity-50"
+            > Cancelar
+            </NavLink>
+            </div>
         </form>
       </div>
     </div>
