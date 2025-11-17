@@ -15,8 +15,12 @@ export function ClienteFormModal({ isOpen, onClose, onSuccess, clienteAtual }: M
     const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
+    const [status, setStatus] = useState('ATIVO');
+    const [notas, setNotas] = useState('');
+
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+
 
     useEffect(() => {
         if (isOpen && clienteAtual){
@@ -24,11 +28,15 @@ export function ClienteFormModal({ isOpen, onClose, onSuccess, clienteAtual }: M
             setCpf(clienteAtual.cpf || '');
             setTelefone(clienteAtual.telefone || '');
             setEmail(clienteAtual.email || '');
+            setStatus(clienteAtual.status || 'ATIVO')
+            setNotas(clienteAtual.notas || '');
         } else if (isOpen && !clienteAtual) {
             setNome('');
             setCpf('');
             setTelefone('');
             setEmail('');
+            setStatus('ATIVO');
+            setNotas('');
         }
     }, [isOpen, clienteAtual])
 
@@ -39,34 +47,44 @@ export function ClienteFormModal({ isOpen, onClose, onSuccess, clienteAtual }: M
         
         const token = localStorage.getItem('authToken');
         const headers = {'Authorization':`Bearer ${token}`};
-        const dadosDoFormulario = {nome, cpf, telefone, email};
+        const dadosDoFormulario = {nome, cpf, telefone, email, status, notas};
+
+        console.log("[FRONTEND] Enviando o pacote: ", dadosDoFormulario)
 
         try {
+            let response;
+
             if (clienteAtual) {
-                await axios.put(
+                console.log(`[FRONTEND] Modo Edição - ID: ${clienteAtual.id}`);
+                response = await axios.put(
                 `http://localhost:8080/api/clientes/${clienteAtual.id}`, 
                 dadosDoFormulario,
                 { headers }
                 );
             } else {
-                await axios.post(
+                response = await axios.post(
                 'http://localhost:8080/api/clientes',
                 dadosDoFormulario,
                 { headers }
                 );
             }
-      
+        console.log("[BACKEND] O servidor respondeu com:", response.data);
 
         setIsLoading(false);
         setNome('');
         setCpf('');
         setTelefone('');
         setEmail('');
+        setStatus('ATIVO')
+        setNotas('');
+
         onClose(); 
         onSuccess();
+        
 
-        } catch (err) {
+        } catch (err: any) {
         setIsLoading(false);
+        console.error("[ERRO] Aconteceu um problema:", err.response?.data || err.message);
         setError('Falha ao criar cliente. Verifique os dados.');
         }
     };
@@ -135,6 +153,31 @@ export function ClienteFormModal({ isOpen, onClose, onSuccess, clienteAtual }: M
                     className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
                     required
                 />
+                </div>
+
+                {/* Status */}
+                <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Status</label>
+                    <select 
+                    value={status} 
+                    id="status"
+                    onChange={(e) => setStatus(e.target.value)}
+                    className="w-30 px-3 py-2 p-4 mt-1 border border-gray-300 rounded-lg text-black">
+                        <option value="ATIVO">Ativo</option>
+                        <option value="INATIVO">Inativo</option>
+                    </select>
+                </div>
+
+                {/* Notas */}
+                <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Observações</label>
+                    <textarea 
+                    value={notas} 
+                    id="notas"
+                    rows={4}
+                    onChange={(e) => setNotas(e.target.value)}
+                    className="w-full px-3 py-2 p-4 mt-1 border border-gray-300 rounded-lg text-black resize-none">
+                    </textarea>
                 </div>
 
                 {/* Mensagem de Erro */}

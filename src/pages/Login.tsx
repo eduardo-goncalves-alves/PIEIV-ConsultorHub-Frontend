@@ -99,7 +99,7 @@ export function LoginPage() {
           </NavLink>
 
           {/* Botão de Entrar */}
-          <div>
+          <div className='space-y-3'>
             <button
               type="submit"
               disabled={isLoading}
@@ -108,6 +108,14 @@ export function LoginPage() {
               {/* Mostra "Entrar" ou "Carregando..." */}
               {isLoading ? 'Carregando...' : 'Entrar'}
             </button>
+            <div className="text-center mt-3">
+            <p className="text-gray-400 text-sl">
+                Não tem uma uma conta?{' '}
+                <NavLink to="/cadastro" className="text-[#40BEBE] hover:underline font-bold">
+                Cadastre-se
+                </NavLink>
+            </p>
+            </div>
           </div>
         </form>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { LuChartNoAxesCombined, LuUsers, LuFileText, LuShield, LuLogOut } from 'react-icons/lu';
+import { LuChartNoAxesCombined, LuUsers, LuFileText, LuShield, LuLogOut, LuUserRoundPen } from 'react-icons/lu';
 
 interface SidebarProps {
   onLogoutClick: () => void;
@@ -60,8 +60,16 @@ export function Sidebar({onLogoutClick}: SidebarProps) {
         </NavLink>
       </nav>
 
-      {/* 3. O Botão de Sair */}
       <div className="p-4 border-t border-slate-700">
+        <NavLink 
+          to="/perfil" 
+          className={({ isActive }) => 
+            `${baseLinkClass} ${isActive ? activeLinkClass : ''}`
+          }
+        >
+          <LuUserRoundPen className="mr-3 h-5 w-5" /> 
+          Perfil
+        </NavLink>
         <button 
           onClick={onLogoutClick}
           className={`${baseLinkClass} text-red-400 hover:bg-red-900/50`}

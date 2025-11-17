@@ -1,7 +1,9 @@
 export interface Apolice {
-  id: string;
-  nome: string;
-  cpf: string;
-  email: string;
-  telefone: string;
+  createdOn: string;
+  valorPremio: number;
+  dataInicioVigencia: string;
+  dataTerminoVigencia: string;
+  status: string;
+  tipo: string;
+  nomeArquivo: string
 } 
