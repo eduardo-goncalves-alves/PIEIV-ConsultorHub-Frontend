@@ -22,7 +22,7 @@ export function ConfirmModal({isOpen, onClose, onConfirm, children}: ModalProps)
                     <button
                         type="button"
                         onClick={onClose}
-                        className="px-5 py-2 text-white bg-[#40BEBE] rounderd-lg hover:bg-[#287474]"
+                        className="px-5 py-2 text-white bg-[#40BEBE] rounded-lg hover:bg-[#287474]"
                     >
                         Cancelar
                     </button>
@@ -30,7 +30,7 @@ export function ConfirmModal({isOpen, onClose, onConfirm, children}: ModalProps)
                     <button
                         type="button"
                         onClick={onConfirm}
-                        className="px-5 py-2 text-white bg-[#3D3E7E] rounderd-lg hover:bg-[#2d2e5e]"
+                        className="px-5 py-2 text-white bg-[#3D3E7E] rounded-lg hover:bg-[#2d2e5e]"
                     >
                         Confirmar
                     </button>

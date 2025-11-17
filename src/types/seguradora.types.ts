@@ -4,4 +4,5 @@ export interface Seguradora {
   email: string;
   cnpj: string;
   status: string;
+  notas: string;
 }

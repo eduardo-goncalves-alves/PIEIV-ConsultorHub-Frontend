@@ -26,9 +26,9 @@ export function RedefinirSenhaPage() {
 
             setIsLoading(false);
             const token = response.data.token;
-            localStorage.setItem('authToken', token); // Salva o Token no Navegador
+            localStorage.setItem('authToken', token);
 
-            window.location.href = '/';
+            setSuccessMsg('E-mail enviado. Verifique seu email!.');
 
         } catch (err) {
             setIsLoading(false);
@@ -48,15 +48,31 @@ export function RedefinirSenhaPage() {
           <h2 className="mt-2 mb-6 text-2xl font-bold text-center text-white">
             Redefinir Senha
           </h2>
-          <p className='mt-2 mb-6 text-[1.2em] text-center text-white'>
-            Informe o e-mail para o qual você deseja redefinir sua senha.
-          </p>
         </div>
 
-        {/* Formulário */}
-        <form className="space-y-6" onSubmit={handleSubmit}> 
-          
-          {/* Input de Email */}
+        {/* Rederização condicional*/}
+        {successMsg ? (
+          <div className="text-center">
+            <div className="p-3 text-center text-green-400 bg-green-900/30 rounded-lg">
+              {successMsg}
+            </div>
+            <Link 
+              to="/login" 
+              className="block w-full px-4 py-3 mt-6 font-semibold text-white disabled:opacity-50"
+            >
+              Voltar para o Login
+            </Link>
+          </div>
+
+        ) : (
+
+          <>
+            <p className='mt-2 mb-6 text-[1.2em] text-center text-white'>
+              Informe o e-mail para o qual você deseja redefinir sua senha.
+            </p>
+
+            <form className="space-y-6" onSubmit={handleSubmit}>
+              {/* Input de Email */}
           <div>
             <input
               id="email"
@@ -70,14 +86,18 @@ export function RedefinirSenhaPage() {
             />
           </div>
 
-          {/* Mensagem de Erro*/}
           {error && (
             <div className="p-3 text-center text-red-400 bg-red-900/30 rounded-lg">
               {error}
             </div>
           )}
 
-          {/* Botão de Entrar */}
+          {successMsg && (
+            <div className="p-3 text-center text-green-400 bg-green-900/30 rounded-lg">
+              {successMsg}
+            </div>
+          )}
+
           <div>
             <button
             
@@ -85,18 +105,21 @@ export function RedefinirSenhaPage() {
               disabled={isLoading}
               className="w-full px-4 py-3 font-semibold text-white rounded-lg bg-[#40BEBE] hover:bg-[#38a8a8] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#40BEBE] disabled:opacity-50"
             >
-              {/* Mostra "Entrar" ou "Carregando..." */}
               {isLoading ? 'Enviando...' : 'Redefinir Senha'}
             </button>
           </div>
-          <div className='w-full text-center'>
-            <NavLink
-              to='/login'
-              className="w-full px-4 py-3 my-3 font-semibold text-white disabled:opacity-50"
-            > Cancelar
-            </NavLink>
+            </form>
+
+            <div className='w-full text-center'>
+              <Link
+                to='/login'
+                className="w-full px-4 py-3 my-3 font-semibold text-white disabled:opacity-50"
+              >
+                Cancelar
+              </Link>
             </div>
-        </form>
+          </>
+        )}
       </div>
     </div>
   );

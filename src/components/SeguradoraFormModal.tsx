@@ -14,6 +14,9 @@ export function SeguradoraFormModal({ isOpen, onClose, onSuccess, seguradoraAtua
     const [nome, setNome] = useState('');
     const [cnpj, setCnpj] = useState('');
     const [email, setEmail] = useState('');
+    const [status, setStatus] = useState('');
+    const [notas, setNotas] = useState('');
+
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -22,10 +25,14 @@ export function SeguradoraFormModal({ isOpen, onClose, onSuccess, seguradoraAtua
             setNome(seguradoraAtual.nome || '');
             setCnpj(seguradoraAtual.cnpj || '');
             setEmail(seguradoraAtual.email || '');
+            setStatus(seguradoraAtual.status || '');
+            setNotas(seguradoraAtual.notas || '');
         } else if (isOpen && !seguradoraAtual) {
             setNome('');
             setCnpj('');
             setEmail('');
+            setStatus('');
+            setNotas('');
         }
     }, [isOpen, seguradoraAtual])
 
@@ -36,7 +43,7 @@ export function SeguradoraFormModal({ isOpen, onClose, onSuccess, seguradoraAtua
         
         const token = localStorage.getItem('authToken');
         const headers = {'Authorization':`Bearer ${token}`};
-        const dadosDoFormulario = {nome, cnpj, email, status};
+        const dadosDoFormulario = {nome, cnpj, email, status, notas};
 
         try {
             if (seguradoraAtual) {
@@ -58,6 +65,7 @@ export function SeguradoraFormModal({ isOpen, onClose, onSuccess, seguradoraAtua
         setNome('');
         setCnpj('');
         setEmail('');
+        setNotas('');
         onClose(); 
         onSuccess();
 
@@ -94,37 +102,50 @@ export function SeguradoraFormModal({ isOpen, onClose, onSuccess, seguradoraAtua
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
-                <div>
-                    <label htmlFor="cnpj" className="block text-sm font-medium text-gray-700">CNPJ</label>
-                    <IMaskInput
-                        mask="00.000.000/0000-00"
-                        type="text"
-                        id="cnpj"
-                        value={cnpj}
-                        onAccept={(value) => setCnpj(value)}
+                    <div>
+                        <label htmlFor="cnpj" className="block text-sm font-medium text-gray-700">CNPJ*</label>
+                        <IMaskInput
+                            mask="00.000.000/0000-00"
+                            type="text"
+                            id="cnpj"
+                            value={cnpj}
+                            onAccept={(value) => setCnpj(value)}
+                            className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
+                            required
+                        />
+                    </div>
+
+                    {/* Email */}
+                    <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email*</label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
                         required
                     />
+                    </div>
                 </div>
 
-                {/* Email */}
-                <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
-                    required
-                />
+                {/* Notas */}
+                <div className="grid grid-cols-1">
+                    <label htmlFor="text" className="block text-sm font-medium text-gray-700">Observações</label>
+                    <textarea 
+                    value={notas} 
+                    id="notas"
+                    rows={4}
+                    onChange={(e) => setNotas(e.target.value)}
+                    className="w-full px-3 py-2 p-4 mt-1 border border-gray-300 rounded-lg text-black resize-none">
+                    </textarea>
                 </div>
 
                 {/* Mensagem de Erro */}
                 {error && (
                 <p className="text-sm text-red-600">{error}</p>
                 )}
-            </div>
+            
             </div>
             
             {/* Botões de Ação */}

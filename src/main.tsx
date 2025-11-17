@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css' 
 
-
 import {
   createBrowserRouter,
   RouterProvider,
@@ -17,6 +16,8 @@ import { ApolicesPage } from './pages/Apolices.tsx';
 import { SeguradoraPage } from './pages/Seguradoras.tsx';
 import { RedefinirSenhaPage } from './pages/EsqueciSenha.tsx';
 import { ResetarSenhaPage } from './pages/ResetarSenha.tsx';
+import { PerfilPage } from './pages/Perfil.tsx';
+import { CadastroPage } from './pages/Cadastro.tsx';
 
 // Mapa de rotas
 const router = createBrowserRouter([
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
   path: "/resetar-senha", 
   element: <ResetarSenhaPage />,
+  },
+  {
+  path: "/cadastro", 
+  element: <CadastroPage />,
   },
   {
     path: "/", 
@@ -52,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/seguradoras", // 
         element: <SeguradoraPage />,
+      },
+      {
+        path: "/perfil", // 
+        element: <PerfilPage />,
       },
     ]
   },

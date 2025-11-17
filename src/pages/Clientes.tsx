@@ -6,6 +6,7 @@ import { ClienteFormModal } from '../components/ClienteFormModal';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { CSVLink } from 'react-csv';
 import { type Cliente } from '../types/cliente.types';
+import { StatusTag } from '../components/StatusTag';
 
 export function ClientesPage() {
 
@@ -131,10 +132,10 @@ export function ClientesPage() {
             <thead className="bg-[#2e2f5f] text-white">
               <tr>
                 <th className="w-4/12 px-6 py-3 text-left text-sm font-semibold">Nome</th>
-                <th className="w-3/12 px-6 py-3 text-left text-sm font-semibold">CPF</th>
-                <th className="w-2/12 px-6 py-3 text-left text-sm font-semibold">Telefone</th>
                 <th className="w-3/12 px-6 py-3 text-left text-sm font-semibold">Email</th>
-                <th className="w-1/12 px-6 py-3 text-left text-sm font-semibold">Ações</th>
+                <th className="w-2/12 px-6 py-3 text-left text-sm font-semibold">Telefone</th>
+                <th className="w-2/12 px-6 py-3 text-center text-sm font-semibold">Status</th>
+                <th className="w-1/12 px-6 py-3 text-center text-sm font-semibold">Ações</th>
               </tr>
             </thead>
             
@@ -142,22 +143,22 @@ export function ClientesPage() {
               {clientesFiltrados.map((cliente) => (
                 <tr key={cliente.id}>
                   <td className="px-6 py-4 text-black">{cliente.nome}</td>
-                  <td className="px-6 py-4 text-black">{cliente.cpf}</td>
-                  <td className="px-6 py-4 text-black">{cliente.telefone}</td>
                   <td className="px-6 py-4 text-black">{cliente.email}</td>
-                  <td className="px-6 py-4 flex space-x-3">
+                  <td className="px-6 py-4 text-black">{cliente.telefone}</td>
+                  <td className="px-6 py-4 text-black text-center"><StatusTag status={cliente.status}></StatusTag></td>
+                  <td className="px-6 py-4 flex space-x-3 text-center">
                     <LuPencil 
                     onClick={() =>{
                       setClienteParaEdit(cliente)
                       setIsFormModalOpen(true)
                     }}
-                    className="w-10 h-7 text-black cursor-pointer hover:text-green-500" />
+                    className="w-8 h-5 text-black cursor-pointer hover:text-green-500" />
                     <LuTrash2 
                     onClick={() => {
                       setClienteIdParaDel(cliente.id);
                       setIsConfirmModalOpen(true)
                     }}        
-                    className="w-10 h-7 text-black cursor-pointer hover:text-red-500" />
+                    className="w-8 h-5 text-black cursor-pointer hover:text-red-500" />
                   </td>
                 </tr>
               ))}
