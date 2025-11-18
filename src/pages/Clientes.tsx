@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'; 
 import axios from 'axios';
 import { Header } from '../components/layout/Header';
-import { LuPencil, LuTrash2, LuPlus, LuDownload } from 'react-icons/lu'; 
+import { LuPencil, LuTrash2, LuPlus, LuDownload, LuMail } from 'react-icons/lu'; 
 import { ClienteFormModal } from '../components/ClienteFormModal';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { CSVLink } from 'react-csv';
@@ -132,7 +132,7 @@ export function ClientesPage() {
             <thead className="bg-[#2e2f5f] text-white">
               <tr>
                 <th className="w-4/12 px-6 py-3 text-left text-sm font-semibold">Nome</th>
-                <th className="w-3/12 px-6 py-3 text-left text-sm font-semibold">Email</th>
+                <th className="w-3/12 px-6 py-3 text-left text-sm font-semibold flex-row">Email</th>
                 <th className="w-2/12 px-6 py-3 text-left text-sm font-semibold">Telefone</th>
                 <th className="w-2/12 px-6 py-3 text-center text-sm font-semibold">Status</th>
                 <th className="w-1/12 px-6 py-3 text-center text-sm font-semibold">Ações</th>
