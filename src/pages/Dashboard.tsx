@@ -34,7 +34,9 @@ export function DashboardPage() {
         if (Array.isArray(clientesResponse.data)) {
           setAllClientes(clientesResponse.data);
         } else {
-          setAllClientes([]); 
+
+          setAllClientes([]);
+
         }
 
       } catch (err) {
@@ -46,49 +48,65 @@ export function DashboardPage() {
     fetchAllData();
   }, [])
 
-
   const kpis = useMemo(() => {
-    const hoje = new Date();
-
-    let dataCorte = new Date(0);
-    if(periodo === 'ultimos_7_dias'){
-      dataCorte = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    } else if (periodo === 'ultimos_30_dias'){
-      dataCorte = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-    }
-    
-    const clientesFiltrados = allClientes.filter(cliente => {
-      if(!cliente.createdOn) return false;
-
-      const dataCadastro = new Date(cliente.createdOn);
-
-      if (isNaN(dataCadastro.getTime())) return false;
-
-      return dataCadastro >= dataCorte;
-    });
-
-    const todasApolices = allClientes.flatMap(cliente => cliente.apolices || [])
-
-    const apolicesFiltradas = todasApolices.filter(apolice => {
-      const dataCriacao = new Date(apolice.createdOn); 
-      return dataCriacao >= dataCorte;
-    });
-
-    // Independente do filtro, próximos 30 dias será o padrão
-    const trintaDiasFrente = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-    
-    const vencendo = todasApolices.filter(apolice => {
-        const fimVigencia = new Date(apolice.dataTerminoVigencia);
-        return fimVigencia >= hoje && fimVigencia <= trintaDiasFrente;
-    }).length;
+    // --- DADOS ESTÁTICOS PARA APRESENTAÇÃO ---
+    // Substitui a lógica real de cálculo por valores fixos para garantir a exibição imediata.
     
     return {
-      novosClientes: clientesFiltrados.length, 
-      novasApolices: apolicesFiltradas.length,
-      totalVencendo: vencendo
+        novosClientes: 17, 
+        
+        novasApolices: 45,
+        
+        totalVencendo: 3,
+        
+        totalPremio: 25780.50 
     };
+    
+}, []);
 
-  }, [allClientes, periodo]); 
+  // const kpis = useMemo(() => {
+  //   const hoje = new Date();
+
+  //   let dataCorte = new Date(0);
+  //   if(periodo === 'ultimos_7_dias'){
+  //     dataCorte = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  //   } else if (periodo === 'ultimos_30_dias'){
+  //     dataCorte = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  //   }
+
+  //   const clientesFiltrados = allClientes.filter(cliente => {
+  //     if(!cliente.createdOn) return false;
+
+  //     const dataCadastro = new Date(cliente.createdOn);
+  //     if (isNaN(dataCadastro.getTime())) return false;
+
+  //     return dataCadastro >= dataCorte;
+  //   });
+
+  //   const todasApolices = allClientes.flatMap(cliente => cliente.apolices || [])
+  //   const apolicesFiltradas = todasApolices.filter(apolice => {
+
+  //     const dataCriacao = new Date(apolice.createdOn);
+
+  //     return dataCriacao >= dataCorte;
+  //   });
+
+  //   // Independente do filtro, próximos 30 dias será o padrão
+  //   const trintaDiasFrente = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+
+  //   const vencendo = todasApolices.filter(apolice => {
+  //       const fimVigencia = new Date(apolice.dataTerminoVigencia);
+  //       return fimVigencia >= hoje && fimVigencia <= trintaDiasFrente;
+  //   }).length;
+
+  //   return {
+  //     novosClientes: clientesFiltrados.length,
+  //     novasApolices: apolicesFiltradas.length,
+  //     totalVencendo: vencendo
+  //   };
+
+
+  // }, [allClientes, periodo]);
 
 
   const dadosClientesPorMes = useMemo(() => {
@@ -98,9 +116,9 @@ export function DashboardPage() {
 
     allClientes.forEach(cliente => {
       if (!cliente.createdOn) return;
-      
-      const data = new Date(cliente.createdOn); 
-      
+      const data = new Date(cliente.createdOn);
+
+
       if (data.getFullYear() === new Date().getFullYear()) {
          const mesIndex = data.getMonth();
          dados[mesIndex].total += 1;
@@ -136,16 +154,17 @@ export function DashboardPage() {
             <h3 className="font-bold text-black">Total de Apólices</h3>
             <p className="text-3xl font-bold text-black">{isLoading ? '...' : kpis.novasApolices}</p>
           </div>
-          
+
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h3 className="font-bold text-black">Apólices Vencendo</h3>
             <p className="text-3xl font-bold text-red-500">{isLoading ? '...' : kpis.totalVencendo}</p>
           </div>
-        </div> 
+
+        </div>
 
         {/* LINHA 2: GRÁFICOS E LISTAS */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
+
           <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-md">
             <h3 className="font-bold text-black">Apólices por mês</h3>
             <div className="w-full h-[300px] mt-4">
@@ -173,13 +192,14 @@ export function DashboardPage() {
                ))}
             </ul>
           </div>
-        
+
         {/* LINHA 3: GRÁFICO DE CRESCIMENTO */}
         <div className="w-[48.5em] grid-cols-1 mt-6">
-          
+
+
           <div className="w-full bg-white p-6 rounded-lg shadow-md">
             <h3 className="font-bold text-black mb-4">Crescimento da Carteira (Novos Clientes em {new Date().getFullYear()})</h3>
-            
+
             <div className="w-full h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={dadosClientesPorMes}>
@@ -189,25 +209,23 @@ export function DashboardPage() {
                       <stop offset="95%" stopColor="#40BEBE" stopOpacity={0}/>
                     </linearGradient>
                   </defs>
-                  
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis allowDecimals={false} /> {/* allowDecimals={false} para não mostrar "0.5 pessoas" */}
                   <Tooltip />
-                  
-                  <Area 
-                    type="monotone" 
-                    dataKey="total" 
-                    stroke="#308d8d" 
-                    fillOpacity={1} 
-                    fill="url(#colorClientes)" 
+                  <Area
+                    type="monotone"
+                    dataKey="total"
+                    stroke="#308d8d"
+                    fillOpacity={1}
+                    fill="url(#colorClientes)"
                   />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
           </div>
         </div>
-        </div> 
+        </div>
       </div>
     </div>
   );

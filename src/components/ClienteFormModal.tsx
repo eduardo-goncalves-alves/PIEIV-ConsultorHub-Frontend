@@ -164,7 +164,7 @@ export function ClienteFormModal({ isOpen, onClose, onSuccess, clienteAtual }: M
                     onChange={(e) => setStatus(e.target.value)}
                     className="w-30 px-3 py-2 p-4 mt-1 border border-gray-300 rounded-lg text-black">
                         <option value="ATIVO">Ativo</option>
-                        <option value="INATIVO">Inativo</option>
+                        <option value="CANCELADO">Cancelado</option>
                     </select>
                 </div>
 

@@ -11,15 +11,30 @@ const statusColorMap: { [key: string]: string } = {
   'DEFAULT': 'bg-gray-100 text-gray-800', 
 };
 
-export function StatusTag({ status }: StatusTagProps) {
-  
-  const colorClass = statusColorMap[status.toUpperCase()] || statusColorMap['DEFAULT'];
+interface StatusTagProps {
+    status: string;
+}
 
-  return (
-    <span 
-      className={`px-3 py-1 text-xs font-semibold rounded-full ${colorClass}`}
-    >
-      {status}
-    </span>
-  );
+export function StatusTag({ status }: StatusTagProps) {
+    let classes = '';
+
+    switch (status) {
+        case 'ATIVO':
+            classes = 'bg-green-100 text-green-700';
+            break;
+        case 'CANCELADO':
+            classes = 'bg-yellow-100 text-yellow-700'; 
+            break;
+        case 'INATIVO':
+            classes = 'bg-gray-100 text-gray-700';
+            break;
+        default:
+            classes = 'bg-gray-200 text-gray-800';
+    }
+
+    return (
+        <span className={`inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium ${classes}`}>
+            {status}
+        </span>
+    );
 }
