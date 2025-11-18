@@ -19,50 +19,56 @@ import { ResetarSenhaPage } from './pages/ResetarSenha.tsx';
 import { PerfilPage } from './pages/Perfil.tsx';
 import { CadastroPage } from './pages/Cadastro.tsx';
 
+import { ProtectedRoute } from './components/auth/ProtectedRoute.tsx';
+
 // Mapa de rotas
 const router = createBrowserRouter([
   {
-    path: "/login", 
-    element: <LoginPage />, 
+    path: "/login",
+    element: <LoginPage />,
   },
   {
-    path: "/redefinir-senha", 
+    path: "/redefinir-senha",
     element: <RedefinirSenhaPage />, 
   },
   {
-  path: "/resetar-senha", 
-  element: <ResetarSenhaPage />,
+    path: "/resetar-senha/", 
+    element: <ResetarSenhaPage />,
   },
   {
-  path: "/cadastro", 
-  element: <CadastroPage />,
+    path: "/cadastro",
+    element: <CadastroPage />,
   },
-  {
-    path: "/", 
-    element: <MainLayout />, 
 
+  {
+    element: <ProtectedRoute />, 
     children: [
       {
-        path: "/", 
-        element: <DashboardPage />, 
+        element: <MainLayout />, 
+        children: [
+          {
+            path: "/", 
+            element: <DashboardPage />,
+          },
+          {
+            path: "/clientes",
+            element: <ClientesPage />,
+          },
+          {
+            path: "/apolices",
+            element: <ApolicesPage />,
+          },
+          {
+            path: "/seguradoras",
+            element: <SeguradoraPage />,
+          },
+          {
+            path: "/perfil",
+            element: <PerfilPage />,
+          },
+        ],
       },
-      {
-        path: "/clientes", // 
-        element: <ClientesPage />,
-      },
-      {
-        path: "/apolices", // 
-        element: <ApolicesPage />,
-      },
-      {
-        path: "/seguradoras", // 
-        element: <SeguradoraPage />,
-      },
-      {
-        path: "/perfil", // 
-        element: <PerfilPage />,
-      },
-    ]
+    ],
   },
 ]);
 
