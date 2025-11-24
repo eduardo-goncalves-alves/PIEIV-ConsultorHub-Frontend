@@ -17,7 +17,7 @@ export function MainLayout(){
     }
     return(
             <>
-            <div className="flex h-screen w-screen bg-slate-100">
+            <div className="flex h-screen w-screen bg-slate-100 dark:bg-gray-900 transition-colors duration-300">
                 <Sidebar onLogoutClick={() => setIsLogoutModalOpen(true)} />
         
             <main className="flex-1 flex flex-col overflow-auto">

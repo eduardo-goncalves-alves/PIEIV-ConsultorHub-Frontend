@@ -20,10 +20,10 @@ export function StatusTag({ status }: StatusTagProps) {
 
     switch (status) {
         case 'ATIVO':
-            classes = 'bg-green-100 text-green-700';
+            classes = 'bg-green-600 text-green-50';
             break;
         case 'CANCELADO':
-            classes = 'bg-yellow-100 text-yellow-700'; 
+            classes = 'bg-red-600 text-red-50'; 
             break;
         case 'INATIVO':
             classes = 'bg-gray-100 text-gray-700';
