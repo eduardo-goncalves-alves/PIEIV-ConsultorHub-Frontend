@@ -80,93 +80,93 @@ export function SeguradoraFormModal({ isOpen, onClose, onSuccess, seguradoraAtua
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-opacity">
+    
+    <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-xl dark:bg-gray-800 transition-colors duration-300">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4 dark:text-white">Adicionar/Editar Seguradora</h2>
         
-        <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-xl">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Adicionar/Editar Seguradora</h2>
+        {/* Formulário */}
+        <form onSubmit={handleSubmit}>
+        <div className="space-y-4">
+            {/* Nome */}
+            <div>
+            <label htmlFor="nome" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Nome*</label>
+            <input
+                type="text"
+                id="nome"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
+                required
+            />
+            </div>
             
-            {/* Formulário */}
-            <form onSubmit={handleSubmit}>
-            <div className="space-y-4">
-                {/* Nome */}
+            <div className="grid grid-cols-2 gap-4">
                 <div>
-                <label htmlFor="nome" className="block text-sm font-medium text-gray-700">Nome*</label>
+                    <label htmlFor="cnpj" className="block text-sm font-medium text-gray-700 dark:text-gray-300">CNPJ*</label>
+                    <IMaskInput
+                        mask="00.000.000/0000-00"
+                        type="text"
+                        id="cnpj"
+                        value={cnpj}
+                        onAccept={(value: any) => setCnpj(value)}
+                        className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
+                        required
+                    />
+                </div>
+
+                {/* Email */}
+                <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Email*</label>
                 <input
-                    type="text"
-                    id="nome"
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
-                    className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
+                    type="email"
+                    id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:border-blue-500 transition-colors"
                     required
                 />
                 </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label htmlFor="cnpj" className="block text-sm font-medium text-gray-700">CNPJ*</label>
-                        <IMaskInput
-                            mask="00.000.000/0000-00"
-                            type="text"
-                            id="cnpj"
-                            value={cnpj}
-                            onAccept={(value) => setCnpj(value)}
-                            className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
-                            required
-                        />
-                    </div>
-
-                    {/* Email */}
-                    <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email*</label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black"
-                        required
-                    />
-                    </div>
-                </div>
-
-                {/* Notas */}
-                <div className="grid grid-cols-1">
-                    <label htmlFor="text" className="block text-sm font-medium text-gray-700">Observações</label>
-                    <textarea 
-                    value={notas} 
-                    id="notas"
-                    rows={4}
-                    onChange={(e) => setNotas(e.target.value)}
-                    className="w-full px-3 py-2 p-4 mt-1 border border-gray-300 rounded-lg text-black resize-none">
-                    </textarea>
-                </div>
-
-                {/* Mensagem de Erro */}
-                {error && (
-                <p className="text-sm text-red-600">{error}</p>
-                )}
-            
             </div>
-            
-            {/* Botões de Ação */}
-            <div className="flex justify-end mt-6 space-x-3">
-                <button
-                type="button" 
-                onClick={onClose} 
-                className="px-4 py-2 text-white bg-[#40BEBE] rounded-lg hover:bg-[#2d8888]"
-                >
-                Cancelar
-                </button>
-                <button
-                type="submit"
-                disabled={isLoading}
-                className="px-4 py-2 font-semibold text-white bg-[#3D3E7E] rounded-lg hover:bg-[#303162] disabled:opacity-50"
-                >
-                {isLoading ? 'Salvando...' : 'Confirmar'}
-                </button>
+
+            {/* Notas */}
+            <div className="grid grid-cols-1">
+                <label htmlFor="notas" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Observações</label>
+                <textarea 
+                value={notas} 
+                id="notas"
+                rows={4}
+                onChange={(e) => setNotas(e.target.value)}
+                className="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg text-black bg-white resize-none dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:border-blue-500 transition-colors">
+                </textarea>
             </div>
-            </form>
+
+            {/* Mensagem de Erro */}
+            {error && (
+            <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+            )}
+        
         </div>
+        
+        {/* Botões de Ação */}
+        <div className="flex justify-end mt-6 space-x-3">
+            <button
+            type="button" 
+            onClick={onClose} 
+            className="px-4 py-2 text-white bg-[#40BEBE] rounded-lg hover:bg-[#2d8888] transition-colors"
+            >
+            Cancelar
+            </button>
+            <button
+            type="submit"
+            disabled={isLoading}
+            className="px-4 py-2 font-semibold text-white bg-[#3D3E7E] rounded-lg hover:bg-[#303162] disabled:opacity-50 dark:bg-indigo-600 dark:hover:bg-indigo-700 transition-colors"
+            >
+            {isLoading ? 'Salvando...' : 'Confirmar'}
+            </button>
         </div>
-  );
+        </form>
+    </div>
+    </div>
+);
 }

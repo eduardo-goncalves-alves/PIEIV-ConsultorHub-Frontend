@@ -147,25 +147,26 @@ export function ApolicesPage() {
 
   
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <Header title="Apólices" />
       <div className="px-2 py-8">
 
         {/* Barra de Gerenciamento */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold text-gray-700">Gerenciar Apólices</h2>
+          <h2 className="text-2xl font-semibold text-gray-700 dark:text-white">Gerenciar Apólices</h2>
           <div className="flex space-x-4 text-black">
             
           </div>
         </div>
         
-        <div className="bg-gray-50 p-4 rounded-lg mb-6 shadow-sm border border-gray-200">
+        {/* Filtros */}
+        <div className="bg-gray-50 p-4 rounded-lg mb-6 shadow-sm border border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-colors">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
                 
                 <div className="flex items-center w-full md:w-1/3">
-                    <LuUser className="text-gray-500 mr-2" size={20} />
+                    <LuUser className="text-gray-500 mr-2 dark:text-gray-400" size={20} />
                     <select 
-                        className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-[#2e2f5f] outline-none text-gray-700"
+                        className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-[#2e2f5f] outline-none text-gray-700 bg-white dark:bg-gray-700 dark:border-gray-600 dark:text-white transition-colors"
                         value={selectedClienteId}
                         onChange={handleClienteChange}
                         disabled={isLoadingClientes}
@@ -183,7 +184,7 @@ export function ApolicesPage() {
                     <input 
                       type="text" 
                       placeholder="Filtrar nº apólice..." 
-                      className="px-4 py-2 border-2 rounded-lg w-full md:w-auto"
+                      className="px-4 py-2 border-2 rounded-lg w-full md:w-auto bg-white border-gray-300 text-gray-700 outline-none focus:border-[#2e2f5f] dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 transition-colors"
                       value={apoliceSearch} 
                       onChange={(e) => setApoliceSearch(e.target.value)}
                       disabled={!selectedClienteId} 
@@ -195,8 +196,8 @@ export function ApolicesPage() {
                       headers={headersCSV}
                       className={`px-4 py-2 font-semibold flex items-center text-white rounded-lg transition-colors ${
                         !selectedClienteId 
-                          ? 'bg-gray-400 cursor-not-allowed pointer-events-none' // 
-                          : 'bg-[#2e2f5f] hover:bg-[#202042]'
+                          ? 'bg-gray-400 cursor-not-allowed pointer-events-none dark:bg-gray-600' 
+                          : 'bg-[#2e2f5f] hover:bg-[#202042] dark:bg-[#373872] dark:hover:bg-[#494a96]'
                       }`}>
                       <LuDownload className='mr-1'></LuDownload> Exportar CSV
                     </CSVLink>
@@ -207,30 +208,34 @@ export function ApolicesPage() {
                         setApoliceParaEdit(null)
                         setIsFormModalOpen(true)
                       }}
-                      className={`px-4 py-2 font-semibold flex items-center text-white rounded-lg transition-colors ${!selectedClienteId ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#2e2f5f] hover:bg-[#202042]'}`}>
+                      className={`px-4 py-2 font-semibold flex items-center text-white rounded-lg transition-colors ${
+                        !selectedClienteId 
+                            ? 'bg-gray-400 cursor-not-allowed dark:bg-gray-600' 
+                            : 'bg-[#2e2f5f] hover:bg-[#202042] dark:bg-[#373872] dark:hover:bg-[#494a96]'
+                        }`}>
                       <LuPlus className='mr-1'></LuPlus> Nova Apólice
                     </button>
                   </div>
             </div>
         </div>
 
-        {error && <div className="mb-4 p-3 text-red-700 rounded border border-red-200">{error}</div>}
+        {error && <div className="mb-4 p-3 text-red-700 bg-red-100 rounded border border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800">{error}</div>}
 
         {/* TABELA */}
         {isLoadingApolices ? (
-            <div className="text-center py-10 text-gray-500">Carregando apólices do cliente...</div>
+            <div className="text-center py-10 text-gray-500 dark:text-gray-400">Carregando apólices do cliente...</div>
         ) : !selectedClienteId ? (
-            <div className="text-center py-10 text-gray-500 bg-gray-50 rounded-lg border-2 border-dashed border-[#2e2f5f]">
+            <div className="text-center py-10 text-gray-500 bg-gray-50 rounded-lg border-2 border-dashed border-[#2e2f5f] dark:bg-gray-800/50 dark:border-gray-600 dark:text-gray-400">
                 Selecione um cliente acima para visualizar as apólices.
             </div>
         ) : apolicesFiltradas.length === 0 ? (
-            <div className="text-center py-10 text-gray-500 bg-white rounded-lg shadow">
+            <div className="text-center py-10 text-gray-500 bg-white rounded-lg shadow dark:bg-gray-800 dark:text-gray-400">
                 Nenhuma apólice encontrada para este cliente.
             </div>
         ) : (
-            <div className="overflow-hidden bg-white rounded-lg shadow-md">
+            <div className="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800 dark:shadow-none border border-transparent dark:border-gray-700 transition-colors">
               <table className="w-full min-w-full table-fixed">
-                <thead className="bg-[#2e2f5f] text-white">
+                <thead className="bg-[#2e2f5f] text-white dark:bg-gray-900">
                   <tr>
                     <th className="w-3/12 px-6 py-3 text-left text-sm font-semibold">Nº Apólice</th>
                     <th className="w-2/12 px-6 py-3 text-left text-sm font-semibold">Tipo</th>
@@ -242,16 +247,16 @@ export function ApolicesPage() {
                   </tr>
                 </thead>
                 
-                <tbody className="divide-y divide-gray-200">
+                <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                   {apolicesFiltradas.map((apolice) => (
-                    <tr key={apolice.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 text-black">{apolice.numeroApolice}</td>
-                      <td className="px-6 py-4 text-black">{apolice.tipo || 'N/D'}</td>
-                      <td className="px-6 py-4 text-black">{apolice.dataTerminoVigencia}</td>
-                      <td className="px-6 py-4 text-black">
+                    <tr key={apolice.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                      <td className="px-6 py-4 text-black dark:text-gray-300">{apolice.numeroApolice}</td>
+                      <td className="px-6 py-4 text-black dark:text-gray-300">{apolice.tipo || 'N/D'}</td>
+                      <td className="px-6 py-4 text-black dark:text-gray-300">{apolice.dataTerminoVigencia}</td>
+                      <td className="px-6 py-4 text-black dark:text-gray-300">
                         {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(apolice.valorPremio || 0)}
                       </td>
-                      <td className="px-6 py-4 text-black">{getSeguradoraNome(apolice.seguradoraId)}
+                      <td className="px-6 py-4 text-black dark:text-gray-300">{getSeguradoraNome(apolice.seguradoraId)}
                       </td>
                       <td className="px-6 py-4 text-black text-center">
                         <StatusTag status={apolice.status} />
@@ -262,14 +267,14 @@ export function ApolicesPage() {
                             setApoliceParaEdit(apolice)
                             setIsFormModalOpen(true)
                           }}
-                          className="w-5 h-5 text-gray-600 cursor-pointer hover:text-blue-600 transition-colors" 
+                          className="w-5 h-5 text-gray-600 dark:text-gray-400 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors" 
                         />
                         <LuTrash2 
                           onClick={() => {
                             setApoliceIdParaDel(apolice.id || ''); 
                             setIsConfirmModalOpen(true)
                           }}        
-                          className="w-5 h-5 text-gray-600 cursor-pointer hover:text-red-600 transition-colors" 
+                          className="w-5 h-5 text-gray-600 dark:text-gray-400 cursor-pointer hover:text-red-600 dark:hover:text-red-400 transition-colors" 
                         />
                       </td>
                     </tr>
@@ -290,7 +295,6 @@ export function ApolicesPage() {
            onSuccess={() => {
              setIsFormModalOpen(false);
              setApoliceParaEdit(null);
-             // Recarrega a lista mantendo o filtro do cliente atual
              fetchApolicesDoCliente(selectedClienteId);
            }}
          />
@@ -304,8 +308,8 @@ export function ApolicesPage() {
               }
             }}
         >
-            <h2 className='text-xl font-bold text-gray-800'>Tem certeza?</h2>
-            <p className='mt-2 italic text-[0.9em] text-gray-600'>
+            <h2 className='text-xl font-bold text-gray-800 dark:text-white'>Tem certeza?</h2>
+            <p className='mt-2 italic text-[0.9em] text-gray-600 dark:text-gray-300'>
               Você realmente deseja excluir esta apólice? Esta ação não pode ser desfeita.
             </p>
         </ConfirmModal>

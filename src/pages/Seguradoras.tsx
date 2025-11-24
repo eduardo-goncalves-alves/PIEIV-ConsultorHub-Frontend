@@ -83,18 +83,18 @@ export function SeguradoraPage() {
   }
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <Header title="Seguradoras" />
       <div className="px-2 py-8">
         
         {/* Barra de Gerenciamento */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold text-gray-700">Gerenciar Seguradoras</h2>
-          <div className="flex space-x-4 text-black">
+          <h2 className="text-2xl font-semibold text-gray-700 dark:text-white">Gerenciar Seguradoras</h2>
+          <div className="flex space-x-4 text-black dark:text-white">
             <input 
               type="text" 
               placeholder="Buscar por nome" 
-              className="px-4 py-2 border-2 rounded-lg"
+              className="px-4 py-2 border-2 rounded-lg bg-white border-gray-200 text-gray-800 outline-none focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white dark:placeholder-gray-400 transition-colors"
               value={seguradoraSearch} 
               onChange={(e) => setSeguradoraSearch(e.target.value)}
             />
@@ -103,16 +103,16 @@ export function SeguradoraPage() {
                 setSeguradoraParaEdit(null)
                 setIsFormModalOpen(true)
               }}
-              className="px-4 py-2 font-semibold flex items-center text-white bg-[#2e2f5f] rounded-lg hover:bg-[#202042]">
+              className="px-4 py-2 font-semibold flex items-center text-white bg-[#2e2f5f] rounded-lg hover:bg-[#202042] ark:bg-[#373872] dark:hover:bg-[#494a96] transition-colors">
               <LuPlus className='mr-1'></LuPlus> Adicionar Seguradora
             </button>
           </div>
         </div>
 
         {/* Tabela */}
-        <div className="overflow-hidden bg-white rounded-lg shadow-md">
+        <div className="overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800 dark:shadow-none border border-transparent dark:border-gray-700 transition-colors">
           <table className="w-full min-w-full table-fixed">
-            <thead className="bg-[#2e2f5f] text-white">
+            <thead className="bg-[#2e2f5f] text-white dark:bg-gray-900">
               <tr>
                 <th className="w-4/12 px-6 py-3 text-left text-sm font-semibold">Nome</th>
                 <th className="w-3/12 px-6 py-3 text-left text-sm font-semibold">Email</th>
@@ -122,12 +122,12 @@ export function SeguradoraPage() {
               </tr>
             </thead>
             
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
               {seguradorasFiltrados.map((seguradora) => (
-                <tr key={seguradora.id}>
-                  <td className="px-6 py-4 text-black">{seguradora.nome}</td>
-                  <td className="px-6 py-4 text-black">{seguradora.email}</td>
-                  <td className="px-6 py-4 text-black">{seguradora.cnpj}</td>
+                <tr key={seguradora.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                  <td className="px-6 py-4 text-black dark:text-gray-300">{seguradora.nome}</td>
+                  <td className="px-6 py-4 text-black dark:text-gray-300">{seguradora.email}</td>
+                  <td className="px-6 py-4 text-black dark:text-gray-300">{seguradora.cnpj}</td>
                   <td className="px-6 py-4"><StatusTag status={seguradora.status} /></td>
                   <td className="px-6 py-4 flex space-x-3">
                     <LuPencil 
@@ -135,13 +135,13 @@ export function SeguradoraPage() {
                       setSeguradoraParaEdit(seguradora)
                       setIsFormModalOpen(true)
                     }}
-                    className="w-10 h-7 text-black cursor-pointer hover:text-green-500" />
+                    className="w-6 h-6 text-gray-600 dark:text-gray-400 cursor-pointer hover:text-green-500 dark:hover:text-green-400 transition-colors" />
                     <LuTrash2 
                     onClick={() => {
                       setSeguradoraIdParaDel(seguradora.id);
                       setIsConfirmModalOpen(true)
                     }}        
-                    className="w-10 h-7 text-black cursor-pointer hover:text-red-500" />
+                    className="w-6 h-6 text-gray-600 dark:text-gray-400 cursor-pointer hover:text-red-500 dark:hover:text-red-400 transition-colors" />
                   </td>
                 </tr>
               ))}
@@ -172,8 +172,8 @@ export function SeguradoraPage() {
               }
             }}
         >
-            <h2 className='text-xl font-bold text-gray-800'> Tem certeza ?</h2>
-            <p className='mt-2 italic text-gray-600'>
+            <h2 className='text-xl font-bold text-gray-800 dark:text-white'> Tem certeza ?</h2>
+            <p className='mt-2 italic text-gray-600 dark:text-gray-300'>
               Você realmente deseja excluir esta seguradora? Esta ação não pode ser desfeita.
             </p>
         </ConfirmModal>

@@ -13,7 +13,7 @@ export function ConfirmModal({isOpen, onClose, onConfirm, children}: ModalProps)
     }
     return(
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-            <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-xl">
+            <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-xl dark:bg-gray-800 dark:text-white">
                 <div className="text-xl text-gray-800">
                     {children}
                 </div>
