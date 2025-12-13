@@ -238,7 +238,7 @@ export function ApolicesPage() {
                 <thead className="bg-[#2e2f5f] text-white dark:bg-gray-900">
                   <tr>
                     <th className="w-3/12 px-6 py-3 text-left text-sm font-semibold">Nº Apólice</th>
-                    <th className="w-2/12 px-6 py-3 text-left text-sm font-semibold">Tipo</th>
+                    {/* <th className="w-2/12 px-6 py-3 text-left text-sm font-semibold">Tipo</th> */}
                     <th className="w-2/12 px-6 py-3 text-left text-sm font-semibold">Vigência Fim</th>
                     <th className="w-2/12 px-6 py-3 text-left text-sm font-semibold">Valor</th>
                     <th className="w-2/12 px-6 py-3 text-left text-sm font-semibold">Seguradora</th>
@@ -251,7 +251,7 @@ export function ApolicesPage() {
                   {apolicesFiltradas.map((apolice) => (
                     <tr key={apolice.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                       <td className="px-6 py-4 text-black dark:text-gray-300">{apolice.numeroApolice}</td>
-                      <td className="px-6 py-4 text-black dark:text-gray-300">{apolice.tipo || 'N/D'}</td>
+                      {/* <td className="px-6 py-4 text-black dark:text-gray-300">{apolice.tipo || 'N/D'}</td> */}
                       <td className="px-6 py-4 text-black dark:text-gray-300">{apolice.dataTerminoVigencia}</td>
                       <td className="px-6 py-4 text-black dark:text-gray-300">
                         {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(apolice.valorPremio || 0)}

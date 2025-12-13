@@ -17,7 +17,7 @@ export function MainLayout(){
     }
     return(
             <>
-            <div className="flex h-screen w-screen bg-slate-100 dark:bg-gray-900 transition-colors duration-300">
+            <div className="flex h-screen w-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
                 <Sidebar onLogoutClick={() => setIsLogoutModalOpen(true)} />
         
             <main className="flex-1 flex flex-col overflow-auto">
@@ -31,7 +31,6 @@ export function MainLayout(){
             onClose={() => setIsLogoutModalOpen(false)} 
             onConfirm={handleLogout} 
         >
-            {/* A Mensagem que você quer mostrar */}
             <h2 className="text-xl font-bold text-gray-800">Confirmar Saída</h2>
             <p className="mt-2 text-gray-600">
             Você tem certeza que deseja sair do sistema?

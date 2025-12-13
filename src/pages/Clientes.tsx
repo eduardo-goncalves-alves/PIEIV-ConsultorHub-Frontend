@@ -12,10 +12,12 @@ export function ClientesPage() {
 
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  
   const [clienteParaEdit, setClienteParaEdit] = useState<Cliente | null>(null);
   const [clienteIdParaDel, setClienteIdParaDel] = useState<string | null>(null);
   const [clientesList, setClientesList] = useState<Cliente[]>([]);
   const [clienteSearch, setClienteSearch] = useState('');
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 

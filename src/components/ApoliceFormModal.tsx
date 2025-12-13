@@ -142,11 +142,7 @@ export function ApoliceFormModal({
     }
 
     setUploading(true);
-    setError("");
-
-    // const clienteIdBlob = new Blob([form.clienteId], { type: 'text/plain' });
-    // const seguradoraIdBlob = new Blob([form.seguradoraId], { type: 'text/plain' });
-    // const numeroApoliceBlob = new Blob([form.numeroApolice], { type: 'text/plain' });    
+    setError("");    
     
     const token = localStorage.getItem("authToken");
 

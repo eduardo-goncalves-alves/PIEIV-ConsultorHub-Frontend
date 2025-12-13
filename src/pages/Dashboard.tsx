@@ -55,7 +55,7 @@ export function DashboardPage() {
             } catch (err: any) { 
                 console.error('Erro ao buscar dados:', err);
                 if (err.response && err.response.status === 403) {
-                    console.error("ERRO 403: O Backend bloqueou o acesso. Verifica o SecurityConfig.");
+                    console.error("ERRO 403: O Backend bloqueou o acesso.");
                 }
             } finally {
                 setIsLoading(false);
@@ -177,7 +177,7 @@ export function DashboardPage() {
                         <div className={`absolute left-0 top-0 h-full w-1 ${kpis.totalVencendo > 0 ? 'bg-red-500' : 'bg-gray-300'}`}></div>
 
                         <div>
-                            <p className="text-sm font-medium text-gray-500 mb-1">Vencendo em 30 dias</p>
+                            <p className="text-sm font-medium text-gray-500 mb-1 dark:text-gray-400">Apólices vencendo em 30 dias</p>
                             <h3 className={`text-3xl font-bold dark:text-gray-300 ${kpis.totalVencendo > 0 ? 'text-red-600' : 'text-gray-800'}`}>
                                 {isLoading ? <span className="animate-pulse">...</span> : kpis.totalVencendo}
                             </h3>
@@ -197,7 +197,7 @@ export function DashboardPage() {
                 {/* Gráfico de Apólices e Clientes Recentes*/}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                     
-                    {/* GRÁFICO DE BARRAS */}
+                    {/* gráfico de barras */}
                     <div className="lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 transition-colors duration-300">
                         <h3 className="font-bold text-gray-800 dark:text-white text-lg">
                             Crescimento de Apólices <span className="text-gray-400 text-sm font-normal">({new Date().getFullYear()})</span>
@@ -233,8 +233,8 @@ export function DashboardPage() {
                                     
                                     <Legend iconType="circle" iconSize={8} wrapperStyle={{ paddingTop: '20px' }}/>
                                     
-                                    <Bar dataKey="ativas" fill="#6366f1" name="Ativas" radius={[4, 4, 0, 0]} barSize={30} />
-                                    <Bar dataKey="fechadas" fill="#f43f5e" name="Fechadas/Canceladas" radius={[4, 4, 0, 0]} barSize={30} />
+                                    <Bar dataKey="ativas" fill="#6366f1" name="Ativas" radius={[4, 4, 0, 0]} barSize={25} />
+                                    <Bar dataKey="fechadas" fill="#f43f5e" name="Fechadas/Canceladas" radius={[4, 4, 0, 0]} barSize={25} />
                                 </BarChart>
                             </ResponsiveContainer>
                         </div>
