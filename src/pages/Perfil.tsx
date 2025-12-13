@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../components/layout/Header";
 import axios from "axios";
-import { LuUser, LuMail, LuSave, LuCircleCheck, LuCamera } from 'react-icons/lu'; // Certifica-te de ter lucide-react instalado
+import { LuUser, LuMail, LuSave, LuCircleCheck, LuCamera } from 'react-icons/lu';  
 
 export function PerfilPage() {
     const [nome, setNome] = useState('');
@@ -33,7 +33,7 @@ export function PerfilPage() {
     // Salvar dados
     const handleSalvarPerfil = async (e: React.FormEvent) => {
         e.preventDefault();
-        setIsLoading(true); // Correção: Setar true ao iniciar
+        setIsLoading(true); 
         setSuccessMsg('');
         const token = localStorage.getItem('authToken');
 
@@ -49,7 +49,6 @@ export function PerfilPage() {
             setIsLoading(false);
             setSuccessMsg('Perfil atualizado com sucesso!');
             
-            // Limpa a mensagem após 3 segundos
             setTimeout(() => setSuccessMsg(''), 3000);
 
         } catch (err) {
@@ -87,9 +86,9 @@ export function PerfilPage() {
                                     {nome ? getInitials(nome) : <LuUser size={32}/>}
                                 </div>
                                 {/* Botão decorativo de editar foto (sem função por enquanto) */}
-                                <div className="absolute bottom-0 right-0 p-1.5 bg-[#40BEBE] rounded-full border-2 border-white dark:border-gray-800 text-white cursor-pointer hover:bg-[#359d9d] transition">
+                                {/* <div className="absolute bottom-0 right-0 p-1.5 bg-[#40BEBE] rounded-full border-2 border-white dark:border-gray-800 text-white cursor-pointer hover:bg-[#359d9d] transition">
                                     <LuCamera size={14} />
-                                </div>
+                                </div> */}
                             </div>
                             
                             <div className="mb-2 hidden sm:block">
